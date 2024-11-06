@@ -118,30 +118,6 @@ def closure(*sets,M,nelement):
       tuples.append(element)
   return multiple_intersection(tuples)
 
-
-"""Omega Continuity"""
-
-def get_omega_preimage(nelement, function):
-    preimage = set()
-    for element in tuple(function.keys()):
-        element_image = function[element]
-        if all(image.issubset(e) for image, e in zip(element_image, nelement)):
-            preimage.add(element)
-    return preimage
-
-def is_omega_countinuous(function,W,tau):
-  return all((get_omega_preimage(pair,function) in tau) for pair in W)
-
-"""Turning F into an omega continuous function"""
-def basis_e(n_top, function): #gereate the basis of the set of parameters E
-  basis = []
-  for nelement in n_top:
-      preimage = get_omega_preimage(nelement, function)
-      if preimage not in basis:
-          basis.append(preimage)
-  return basis
-
-
 """
 Until here everything worked correctly fo n ary spaces (with n geq 2 of course).
 So now we need code for n = 1, i.e. usual topological spaces.
@@ -209,3 +185,6 @@ def usual_interior(z, tau, s):
     if not interior:
         return set()  # Return the empty set if interior is empty
     return set.union(*interior)
+
+def is_usual_topology(z,tau):
+  return verify_intersections_usual(tau) and verify_unions_usual(tau) and set() in tau and z in tau
