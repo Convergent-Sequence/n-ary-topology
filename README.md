@@ -1,6 +1,7 @@
 # Calculadora espacios topológicos $n$-arios y espacios topológicos usuales
 
 Aquí encontrará una explicación detallada de cómo ejecutar los algoritmos presentados, en un notebook de Google Colab.
+Adicionalmente, el repositorio cuenta con un notebook de python el cual puede descragar y abrir desde drive, para visualizar los ejemplos presentados a continuación.
 
 Cómo el título lo indica, usted contará con una ''calculadora'' tanto para espacios topológicos $n$-arios ($n\geq 2$) como para espacios topológicos usuales, con la cual podrá realizar lo siguiente:
 
@@ -11,7 +12,7 @@ Cómo el título lo indica, usted contará con una ''calculadora'' tanto para es
 ### Configuración de Colab
 
 
-Para poder usar las funciones, debe configuar el notebook de Colab en el cual trabajará. Para ellos, diríjase a ... y ejecute una celda con el siguiente codigo
+Para poder usar las funciones, debe configuar el notebook de Colab en el cual trabajará. Si no cuenta con un notebook, diríjase a [esta página](https://colab.research.google.com/), cree un nuevo notebook y ejecute una celda con el siguiente código.
 
 ```python
 #Clonamos el repositorio 
@@ -36,13 +37,15 @@ Receiving objects: 100% (6/6), done.
 /content/n-ary-topology/n-ary-topology
 ```
 
+En caso de ejecutar la celda más de una vez, asegúrese de comentar o eliminar la línea ```%cd n-ary-topology```, de lo contrario generará error.
+
 ### Funciones para espacios topológicos $n$-arios
 
-Tenga en cuenta que los conjuntos $n$-arios son listas de conjuntos. Por ejemplo el conjunto binario $(\set{c_1}, \set{p_1})$
+Tenga en cuenta que los conjuntos $n$-arios son manejados como listas de conjuntos. Por ejemplo, el conjunto binario $(\set{c_1}, \set{p_1})$
  estaría dado por ```[{'c_1'},{'p_1'}]```, y el conjunto 5-ario $(\set{a_3}, \set{b_1, b_2}, \set{c_3, c_4}, \set{d_1}, \set{e_1, e_2})$
  estaría dado por ```[{'a_3'}, {'b_1', 'b_2'}, {'c_3', 'c_4'}, {'d_1'}, {'e_1', 'e_2'}] ```.
  
-Para poder usar las funciones debemos definir un espacio topológico $n$-ario y sus respectivos conjuntos subyacentes, los cuales usaremos como conjuntos de python.
+Para poder usar las funciones, debemos definir un espacio topológico $n$-ario y sus respectivos conjuntos subyacentes, los cuales usaremos como conjuntos de python.
 Por ejemplo, podemos definir el siguiente espacio topológico $n$-ario.
 
 ```python
@@ -63,15 +66,15 @@ top1 = [[{'a'}, {1, 2, 3, 4, 5, 6}],[{'d'}, {1, 2, 3, 4, 5, 6}],
 
 Ahora, para calcular el interior o la clausura de un conjunto $n$-ario, debemos llamar la función  ```ntop.interior()``` o la funcion ```ntop.closure()```, la función ```ntop.interior()``` recibe como parámetros la topología $n$-aria que hayamos definido y el conjunto $n$-ario al cual le deseamos calcular el interior, y la función ```ntop.closure()``` recibe como parámetros la topología $n$-aria que hayamos definido, el conjunto $n$-ario al cual le deseamos calcular la clausura y los conjuntos subyacentes. Por ejemplo, para obtener la clausura y el interior de $(\set{b,c},\set{2,3,5})$, lo haríamos de la siguiente forma.
 
-
 ```python
 interior1 = ntop.interior(top1,[{'b','c'},{2,3,5}])
 closure1 = ntop.closure(X1,X2,M=top1,nelement=[{'b','c'},{2,3,5}])
 print(interior1, closure1)
 ```
-Para verificar que top1 es efecto una topologia binaria, debemos llamar la función ```ntop.is_n_ary_topology()```, la cual toma por parámetros los conjuntos subyacentes y la topología a verificar, así: ```ntop.is_n_ary_topology(X1,X2,M=top1)```.
 
-Finalmente, para generar una topología $n$-aria a partir de una subbase, demos llamar la función ```ntop.generate_n_ary_topology()``` la cual resibe como parámetros los conjuntos subyacentes y la subbase, por ejemplo, para generar la topología binaria definida anteriormente, lo pdemos hacer por medio de la subbase $\Delta =  \set{(\set{a}, X_2),(\set{d}, X_2),(\set{e}, X_2),(\set{b,c},\set{2,3})}$, así.
+Para verificar que top1 es en efecto una topologia binaria, debemos llamar la función ```ntop.is_n_ary_topology()```, la cual toma por parámetros los conjuntos subyacentes y la topología a verificar, así: ```ntop.is_n_ary_topology(X1,X2,M=top1)```.
+
+Finalmente, para generar una topología $n$-aria a partir de una subbase, debemos llamar la función ```ntop.generate_n_ary_topology()``` la cual recibe como parámetros los conjuntos subyacentes y la subbase, por ejemplo, para generar la topología binaria definida anteriormente, lo podemos hacer por medio de la subbase $\Delta =  \set{(\set{a}, X_2),(\set{d}, X_2),(\set{e}, X_2),(\set{b,c},\set{2,3})}$, así.
 
 ```python
 delta = [[{'a'}, X2],[{'d'}, X2],[{'e'}, X2],[{'b','c'},{2,3}]] 
@@ -94,10 +97,26 @@ top3 = [{'p1', 'p5', 'p6'},{'p2', 'p5', 'p6'},{'p3', 'p5', 'p6'},{'p1', 'p3', 'p
  {'p1', 'p2', 'p3', 'p5', 'p6', 'p7'},{'p1', 'p2', 'p3', 'p5', 'p6'},set()]
 ```
 
-Ahora, para calcular el interior o la clausura de un conjunto dado, debemos llamar la función  ```ntop.usual_interior()``` o la funcion ```ntop.usual_closure()```, ambas funciones reciben como parámetros la topología usual que hayamos definido, el conjunto al cual le deseamos calcular el interior o la clausura, y el conjunto subyacente. Por ejemplo, para obtener la clausura y el interior de $\set{p_4, p_5, p_7, p_8}$, lo haríamos de la siguiente forma.
+Ahora, para calcular el interior o la clausura de un conjunto dado, debemos llamar la función  ```ntop.usual_interior()``` o la función ```ntop.usual_closure()```, ambas funciones reciben como parámetros la topología usual que hayamos definido, el conjunto al cual le deseamos calcular el interior o la clausura, y el conjunto subyacente. Por ejemplo, para obtener la clausura y el interior de $\set{p_4, p_5, p_7, p_8}$, lo haríamos de la siguiente forma.
 
-
-```pythoninterior2 = ntop.usual_interior(z=z, tau=top3, s={'p4', 'p5', 'p7', 'p8'})
+```python
+interior2 = ntop.usual_interior(z=z, tau=top3, s={'p4', 'p5', 'p7', 'p8'})
 closure2 = ntop.usual_closure(z=z, tau=top3, s={'p4', 'p5', 'p7', 'p8'})
 print(interior2, closure2)
+```
+
+Para verificar que top3 es efecto una topología usual, debemos llamar la función ```ntop.is_usual_topology()```, la cual toma por parámetros al conjunto subyacente y la topología a verificar, así: ```ntop.is_usual_topology(z,top3)```.
+
+Finalmente, para generar una topología a partir de una subbase, debemos llamar la función ```ntop.sub_to_tau()``` la cual recibe como parámetro la subbase, por ejemplo, para generar la topología usual definida anteriormente, lo podemos hacer por medio de la subbase $\mathcal{S}=\set{p_1, p_5, p_6},\set{p_2, p_5, p_6},\set{p_3, p_5, p_6},\set{p_4, p_5, p_6, p_7},\set{p_5,p_6}$, así.
+
+```python
+subbase = [
+    {'p1', 'p5', 'p6'},
+    {'p2', 'p5', 'p6'},
+    {'p3', 'p5', 'p6'},
+    {'p4', 'p5', 'p6', 'p7'},
+    {'p5', 'p6'}
+]
+top4 = ntop.sub_to_tau(subbase)
+top4
 ```
